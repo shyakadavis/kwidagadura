@@ -3,10 +3,6 @@
 	import SectionTitle from '$lib/components/SectionTitle.svelte';
 </script>
 
-<svelte:head>
-	<title>{$page.status}</title>
-</svelte:head>
-
 <main>
 	<SectionTitle title={$page.status.toString()} />
 	<p>

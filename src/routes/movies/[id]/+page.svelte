@@ -22,7 +22,6 @@
 
 <Hero movie={data.movie} />
 
-<!-- TODO: In case there is not trailer, the layout is messed up. check Conan, for example. -->
 <section class="column grid">
 	{#if data.trailer}
 		<iframe

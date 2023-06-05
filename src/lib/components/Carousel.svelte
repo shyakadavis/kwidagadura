@@ -2,16 +2,14 @@
 	import { media } from '$lib/api';
 	import type { MovieListResult } from '$lib/types';
 	import type { View } from '$lib/views';
+	import SectionTitle from './SectionTitle.svelte';
 
 	export let movies: MovieListResult[];
 	export let view: View;
 	export let href: string | null;
 </script>
 
-<h2 class="column">
-	{view.title}
-	{#if href}<a {href}>see all</a>{/if}
-</h2>
+<SectionTitle title={view.title} column tag="h2" link={{ href, label: 'see all' }} />
 
 <section class="carousel">
 	{#each movies as movie}
