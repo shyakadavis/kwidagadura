@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Carousel from '$lib/components/Carousel.svelte';
-	import Hero from '$lib/components/Hero.svelte';
+	import Hero from './Hero.svelte';
 	import SectionTitle from '$lib/components/SectionTitle.svelte';
 	import { views } from '$lib/views';
 

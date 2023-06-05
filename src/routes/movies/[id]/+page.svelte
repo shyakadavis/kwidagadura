@@ -61,7 +61,7 @@
 {#if data.movie.recommendations.results.length > 0}
 	<Carousel
 		movies={data.movie.recommendations.results}
-		view={{ title: 'You might also like', endpoint: '' }}
+		view={{ title: 'You might also like...', endpoint: '' }}
 		href={null}
 	/>
 {/if}
@@ -69,8 +69,9 @@
 <style>
 	.grid {
 		display: grid;
-		margin: 2em 0;
+		margin: 2em auto;
 		gap: 2em;
+		place-items: center;
 	}
 
 	iframe {
@@ -87,7 +88,6 @@
 	iframe:hover {
 		background-color: rgba(255, 255, 255, 0.1);
 		border-color: var(--accent);
-		/* border-color: rgba(255, 255, 255, 0.2); */
 	}
 
 	dl {
@@ -103,17 +103,9 @@
 		top: 0.2em;
 	}
 
-	dd {
-		margin: 0;
-	}
-
 	@media (min-width: 40rem) {
 		.grid {
 			grid-template-columns: 1fr 1fr;
-		}
-
-		dl {
-			height: 0;
 		}
 	}
 </style>
