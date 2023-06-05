@@ -1,9 +1,24 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import * as api from '$lib/api';
+	import { navigating, page } from '$app/stores';
 	import '../styles.css';
 	import logo from '$lib/images/logo.svg';
 	import tmdb from '$lib/images/tmdb.svg';
+	import NavigatingIndicator from '$lib/components/NavigatingIndicator.svelte';
 </script>
+
+<svelte:head>
+	<link rel="preconnect" href={api.base} />
+	<title>{$page.data.title ?? 'SvelteFlix'}</title>
+	<meta name="description" content="Discover today's top movies" />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta property="twitter:domain" content="kwidagadura.vercel.app" />
+	<meta property="twitter:url" content="https://kwidagadura.vercel.app/" />
+	<meta name="twitter:title" content="SvelteFlix" />
+	<meta name="twitter:description" content="Discover today's top movies" />
+	<meta name="twitter:image" content="https://kwidagadura.vercel.app/og.png" />
+</svelte:head>
 
 <nav>
 	<a href="/"><img src={logo} alt="SvelteFlix" srcset="" /></a>
@@ -23,6 +38,10 @@
 	<p>Data provided by</p>
 	<a href="https://www.themoviedb.org/"> <img src={tmdb} alt="The Movie DB" /></a>
 </footer>
+
+{#if $navigating}
+	<NavigatingIndicator />
+{/if}
 
 <style>
 	nav {

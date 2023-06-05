@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { media } from '$lib/api';
+	import SectionTitle from '$lib/components/SectionTitle.svelte';
+	import Stars from '$lib/components/Stars.svelte';
 	import type { MovieDetails } from '$lib/types';
 
 	export let movie: MovieDetails;
@@ -14,7 +16,8 @@
 	</div>
 
 	<div class="info">
-		<h1>{movie.title}</h1>
+		<SectionTitle title={movie.title} />
+		<Stars vote_average={movie.vote_average} vote_count={movie.vote_count} />
 		<p>{movie.overview}</p>
 	</div>
 </section>
@@ -34,40 +37,33 @@
 		position: absolute;
 		width: 100%;
 		height: 8rem;
-		background: linear-gradient(to top, black, transparent);
-		bottom: 0;
 		left: 0;
+		bottom: 0;
+		background: linear-gradient(to top, black, transparent);
 	}
 
 	.info {
 		display: flex;
 		flex-direction: column;
-		padding: 0 var(--side);
-		gap: 1rem;
+		bottom: 0;
+		width: 100%;
+		padding: var(--side);
 		margin-top: -4rem;
+		gap: 1rem;
 	}
 
-	.info h1,
-	p {
+	.info p {
 		margin: 0;
 	}
 
-	@media (min-width: 60rem) {
+	.info p {
+		max-width: 40ch;
+	}
+
+	@media (min-width: 80em) {
 		.hero {
-			grid-template-columns: 1fr 60rem;
+			grid-template-columns: 1fr 80em;
 			grid-template-rows: auto;
-		}
-
-		.backdrop {
-			grid-column: 2/3;
-		}
-
-		.backdrop::after {
-			width: 15rem;
-			height: 100%;
-			background: linear-gradient(to right, black, transparent);
-			bottom: 0;
-			left: 0;
 		}
 
 		.info {
@@ -77,9 +73,20 @@
 			left: 0;
 			width: 40em;
 			height: 100%;
-			grid-column: 1/3;
-			margin-top: 0;
-			filter: drop-shadow(0 0 0.5rem black) drop-shadow(0 0 0.5rem black);
+			grid-column: 1/2;
+			margin: 0;
+		}
+
+		.backdrop {
+			grid-column: 2/3;
+		}
+
+		.backdrop::after {
+			width: 15rem;
+			height: 100%;
+			left: 0;
+			bottom: 0;
+			background: linear-gradient(to right, black, transparent);
 		}
 	}
 </style>

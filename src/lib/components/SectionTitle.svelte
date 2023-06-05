@@ -15,6 +15,6 @@
 		-webkit-background-clip: text;
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
-		background-image: linear-gradient(to right, #fc8181, #f6ad55, #fc8181);
+		background-image: linear-gradient(to right, var(--accent), #f6ad55, #fc8181);
 	}
 </style>
