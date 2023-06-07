@@ -1,8 +1,12 @@
+import { redirect } from '@sveltejs/kit';
+
 export function load({ locals }) {
+	if (!locals.user) throw redirect(307, '/login');
+
 	return {
 		user: locals.user && {
 			email: locals.user.email,
-			phone: locals.user.phone,
+			phone: locals.user.phone
 		}
 	};
 }
