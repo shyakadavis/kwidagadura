@@ -1,10 +1,16 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { media } from '$lib/api';
 	import SectionTitle from '$lib/components/SectionTitle.svelte';
 	import Stars from '$lib/components/Stars.svelte';
 	import type { MovieDetails } from '$lib/types';
 
 	export let movie: MovieDetails;
+	export let in_watchlist: boolean;
+
+	let submitting = false;
 
 	$: backdrop =
 		movie.images.backdrops.find((image) => !image.iso_639_1) || movie.images.backdrops[0];
@@ -19,6 +25,29 @@
 		<SectionTitle title={movie.title} />
 		<Stars vote_average={movie.vote_average} vote_count={movie.vote_count} />
 		<p>{movie.overview}</p>
+
+		{#if $page.data.user}
+			<form
+				method="POST"
+				action="/watchlist?/{in_watchlist ? 'delete' : 'add'}"
+				use:enhance={() => {
+					in_watchlist = !in_watchlist;
+					submitting = true;
+
+					return async () => {
+						await invalidateAll();
+						submitting = false;
+					};
+				}}
+			>
+				<input type="hidden" name="movie_id" value={movie.id} />
+				<button disabled={submitting}>
+					{in_watchlist ? 'Remove this from your watchlist' : 'Add this to your watchlist'}
+				</button>
+			</form>
+		{:else}
+			<p><a href="/login">Log in</a> to add this to your watchlist.</p>
+		{/if}
 	</div>
 </section>
 
@@ -58,6 +87,12 @@
 
 	.info p {
 		max-width: 40ch;
+	}
+
+	button {
+		font-size: 1em;
+		width: 20em;
+		cursor: pointer;
 	}
 
 	@media (min-width: 80em) {

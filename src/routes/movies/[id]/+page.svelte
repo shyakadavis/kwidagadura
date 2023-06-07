@@ -20,7 +20,7 @@
 	});
 </script>
 
-<Hero movie={data.movie} />
+<Hero movie={data.movie} in_watchlist={data.in_watchlist} />
 
 <section class="column grid">
 	{#if data.trailer}
