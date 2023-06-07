@@ -1,10 +1,13 @@
 <script lang="ts">
 	import * as api from '$lib/api';
-	import { navigating, page } from '$app/stores';
+	import { page } from '$app/stores';
 	import '../styles.css';
 	import logo from '$lib/images/logo.svg';
 	import tmdb from '$lib/images/tmdb.svg';
-	import NavigatingIndicator from '$lib/components/NavigatingIndicator.svelte';
+	import PageTransition from '$lib/components/PageTransition.svelte';
+	import { enhance } from '$app/forms';
+
+	export let data;
 </script>
 
 <svelte:head>
@@ -25,23 +28,28 @@
 
 	<section class="links">
 		<a href="/search">Search</a>
-		<a href="/watchlist">Watchlist</a>
-		<a href="/login">Log In</a>
+
+		{#if data.user}
+			<a href="/watchlist">Watchlist</a>
+			<a href="/profile">Profile</a>
+
+			<form method="POST" action="/logout" use:enhance>
+				<button>Log out</button>
+			</form>
+		{:else}
+			<a href="/login">Log In</a>
+		{/if}
 	</section>
 </nav>
 
-<main class:infinite={$page.data.infinite}>
+<PageTransition url={data.url} infinite={$page.data.infinite}>
 	<slot />
-</main>
+</PageTransition>
 
 <footer>
 	<p>Data provided by</p>
 	<a href="https://www.themoviedb.org/"> <img src={tmdb} alt="The Movie DB" /></a>
 </footer>
-
-{#if $navigating}
-	<NavigatingIndicator />
-{/if}
 
 <style>
 	nav {
@@ -61,19 +69,18 @@
 		text-decoration: none;
 	}
 
+	button {
+		cursor: pointer;
+	}
+
 	img {
 		height: 1rem;
 	}
 
 	.links {
 		display: flex;
+		align-items: center;
 		gap: 1rem;
-	}
-
-	main.infinite {
-		height: 0;
-		flex: 1;
-		overflow: hidden;
 	}
 
 	footer {
